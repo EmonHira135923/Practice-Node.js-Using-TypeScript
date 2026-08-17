@@ -337,29 +337,31 @@ A user sends a request to `/users` and the server returns users' data.
 
 ## 13.1 Node.js + Express.js Project Setup
 
-- [x] What is Node.js?
-- [x] Why do we need Node.js?
-- [x] Node.js is not a programming language
-- [x] Node.js Runtime Environment
-- [x] How Node.js runs JavaScript
-- [x] Browser JavaScript vs Node.js
-- [ ] How Node.js works internally
-- [ ] Install Node.js
-- [ ] Check Node.js version
-- [ ] Project initialization
-- [ ] `package.json`
-- [ ] TypeScript setup
-- [ ] `tsconfig.json`
-- [ ] `src` folder
-- [ ] `app.ts`
-- [ ] `server.ts`
-- [ ] Express.js
-- [ ] Request & Response
-- [ ] HTTP Methods
-- [ ] Routes
-- [ ] Middleware
-- [ ] Basic API
-- [ ] npm Scripts
+[x] What is Node.js?
+[x] Why do we need Node.js?
+[x] Node.js is not a programming language
+[x] Node.js Runtime Environment
+[x] How Node.js runs JavaScript
+[x] Browser JavaScript vs Node.js
+[x] What is V8?
+[x] Relationship between Node.js and V8
+
+[ ] Install Node.js
+[ ] Check Node.js version
+[ ] Project initialization
+[ ] package.json
+[ ] TypeScript setup
+[ ] tsconfig.json
+[ ] src folder
+[ ] app.ts
+[ ] server.ts
+[ ] Express.js
+[ ] Request & Response
+[ ] HTTP Methods
+[ ] Routes
+[ ] Middleware
+[ ] Basic API
+[ ] npm Scripts
 
 ---
 

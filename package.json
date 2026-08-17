@@ -1,0 +1,27 @@
+{
+  "name": "node.js-using-typescript",
+  "version": "1.0.0",
+  "description": "হ্যাঁ ভাই, **এইভাবেই README.md-তে রেখে দিতে পারো**। তবে আমি এটাকে একটু clean করে সাজিয়ে দিচ্ছি যাতে এটা তোমার **learning notes + progress tracker + future revision document** হিসেবে কাজ করে।",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmonHira135923/Practice-Node.js-Using-TypeScript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EmonHira135923/Practice-Node.js-Using-TypeScript/issues"
+  },
+  "homepage": "https://github.com/EmonHira135923/Practice-Node.js-Using-TypeScript#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

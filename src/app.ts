@@ -1,4 +1,5 @@
 import express from "express";
+import {type Request,type Response,type NextFunction} from "express";
 
 const app = express();
 
@@ -8,12 +9,21 @@ app.get("/", (req, res) => {
   res.send("Home Page");
 });
 
-app.get("/users", (req, res) => {
+app.use((req,res,next)=>{
+    console.log("middleware running");
+    next();
+})
+
+app.get("/users",(req, res) => {
     console.log("Users get ",req.query);
   res.send("Users Data");
 });
 
-app.get("/products", (req, res) => {
+const checkProducts = (req : Request,res:Response,next:NextFunction) => {
+    console.log("Middleware product check");
+}
+
+app.get("/products",checkProducts,(req, res) => {
   res.send("Products Data");
 });
 
@@ -28,7 +38,9 @@ app.get("/contact",(req,res)=> {
 app.post("/users",(req,res)=>{
     console.log("request body",req.body);
     console.log("request body",req.body);
-    res.send("Users Created");
+    res.status(201).json({
+        mesage:"User Created Succesfully"
+    })
 })
 
 app.get("/users/:id",(req,res)=>{

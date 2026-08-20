@@ -121,3 +121,38 @@ export const updateProduct = (
     next(err);
   }
 };
+
+// delete items using ID
+export const deleteProduct = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = req.params.id;
+    if (!id || Array.isArray(id)) {
+      return res.status(404).json({
+        message: "Invallid Id",
+        success: false,
+      });
+    }
+    const itemId = parseInt(id, 10);
+    const itemIndex = items.findIndex((item) => item.id == itemId);
+
+    if (itemIndex == -1) {
+      return res.status(404).json({
+        message: "Product Not Found",
+        success: false,
+      });
+    }
+
+    const deleteProduct = items.splice(itemIndex, 1)[0];
+    res.status(200).json({
+      message: "Product Deleted Successfully",
+      success: true,
+      data: deleteProduct,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

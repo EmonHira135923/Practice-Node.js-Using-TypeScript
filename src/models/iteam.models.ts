@@ -6,4 +6,5 @@ export interface Item{
     inStock:boolean;
 }
 
-export const items:Item[] = [];
+
+export let items:Item[] = [];

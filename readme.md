@@ -1,12 +1,51 @@
-# 📘 TypeScript Mastery: Module 13 (Node.js + Express.js + dotenv + TypeScript)
+# 📘 Module 13 — Node.js + Express.js + dotenv + TypeScript (MVC Architecture)
 
-Welcome to **Module 13**! In this module, you will learn how to build a scalable, type-safe REST API using **Node.js**, **Express.js**, **dotenv**, and **TypeScript** structured with the **MVC (Model-View-Controller)** pattern.
+> A hands-on module covering how to build a **scalable, type-safe REST API** using **Node.js**, **Express.js**, **dotenv**, and **TypeScript**, structured with the **MVC (Model-View-Controller)** pattern.
 
 ---
 
-## 📌 13.1 Step-by-Step Project Setup & Dependencies
+## 📑 Table of Contents
 
-To initialize a Node.js project with TypeScript, ES Modules, and hot-reloading using `tsx`, execute the following terminal commands:
+- [Overview](#-overview)
+- [Topics Covered](#-topics-covered)
+- [Tech Stack](#-tech-stack)
+- [Project Setup & Dependencies](#-131-project-setup--dependencies)
+- [Architecture Overview (MVC Pattern)](#-132-architecture-overview-mvc-pattern)
+- [Code Implementation](#-133-code-implementation)
+- [Running and Testing the Application](#-134-running-and-testing-the-application)
+- [API Endpoints Summary](#-api-endpoints-summary)
+
+---
+
+## 🧭 Overview
+
+This module walks through building a **CRUD REST API** for an item/inventory system using Node.js, Express.js, and TypeScript — structured with a clean **MVC architecture** (`config`, `models`, `controllers`, `routes`, `middlewares`, `app`) so business logic, routing, and data are properly separated.
+
+---
+
+## 📚 Topics Covered
+
+| # | Topic |
+|---|-------|
+| 13.1 | Project Setup & Dependencies |
+| 13.2 | Architecture Overview (MVC Pattern) |
+| 13.3 | Code Implementation (Config, Models, Middleware, Controllers, Routes, App, Server) |
+| 13.4 | Running and Testing the Application |
+
+---
+
+## 🛠 Tech Stack
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![dotenv](https://img.shields.io/badge/dotenv-ECD53F?style=for-the-badge&logo=.env&logoColor=black)
+
+---
+
+## 📌 13.1 Project Setup & Dependencies
+
+### 🚀 Initialize the project
 
 ```bash
 # 1. Initialize Node.js project
@@ -17,10 +56,9 @@ npm i express dotenv
 
 # 3. Install TypeScript and development dependencies
 npm i -D typescript tsx @types/node @types/express
-
 ```
 
-### TypeScript Configuration (`tsconfig.json`)
+### ⚙️ TypeScript Configuration (`tsconfig.json`)
 
 Generate `tsconfig.json` using `npx tsc --init` and ensure these compiler options are active:
 
@@ -39,10 +77,9 @@ Generate `tsconfig.json` using `npx tsc --init` and ensure these compiler option
   },
   "include": ["src/**/*"]
 }
-
 ```
 
-### Project Scripts Configuration (`package.json`)
+### 📦 Project Scripts Configuration (`package.json`)
 
 Ensure `"type": "module"` is configured so Node.js natively handles ES Module imports:
 
@@ -69,12 +106,13 @@ Ensure `"type": "module"` is configured so Node.js natively handles ES Module im
     "tsx": "^4.16.2"
   }
 }
-
 ```
 
 ---
 
 ## 📌 13.2 Architecture Overview (MVC Pattern)
+
+### 📁 Project Structure
 
 ```text
 src/
@@ -93,54 +131,30 @@ src/
 ├── app/
 │   └── app.ts             # Express application & middleware setup
 └── server.ts              # Entry point to listen on designated port
-
 ```
 
-### 📖 Folder Breakdown & Differences / ফোল্ডার সমূহের কাজ ও পার্থক্য:
+### 📖 Folder Breakdown & Differences / ফোল্ডার সমূহের কাজ ও পার্থক্য
 
-* **`config/`**:
-* **English:** Centralizes environment variables (`process.env`) into a typed config object. Prevents scattered `process.env` calls.
-* **বাংলা:** প্রজেক্টের সমস্ত এনভায়রনমেন্ট ভ্যারিয়েবল (`process.env`) একটি নির্দিষ্ট টাইপ-সেফ অবজেক্টে একত্রিত করে।
-
-
-* **`models/`**:
-* **English:** Defines data structures (TypeScript interfaces) and handles database interactions or mock data stores.
-* **বাংলা:** ডেটার স্ট্রাকচার (ইন্টারফেস) এবং ডেটাবেজ বা ইন-মেমোরি স্টোর ডিফাইন করে।
-
-
-* **`controllers/`**:
-* **English:** Contains business logic for each route, extracting HTTP requests (`req`) and returning HTTP responses (`res`).
-* **বাংলা:** রাউটের মূল বিজন্যাস লজিক প্রসেস করে এবং রিকোয়েস্ট গ্রহণ করে রেসপন্স প্রদান করে।
-
-
-* **`routes/`**:
-* **English:** Maps specific URL paths to their respective controller functions.
-* **বাংলা:** নির্দিষ্ট URL এন্ডপয়েন্টের সাথে কন্ট্রোলার ফাংশনগুলোর ম্যাপিং সম্পন্ন করে।
-
-
-* **`middlewares/`**:
-* **English:** Intercepts incoming requests for authentication, logging, parsing, or error catching before reaching handlers.
-* **বাংলা:** রিকোয়েস্ট কন্ট্রোলারে পৌঁছানোর আগে বা এরর হ্যান্ডেল করার সময় মধ্যবর্তী ফিল্টার হিসেবে কাজ করে।
-
-
-* **`app/app.ts` vs `server.ts**`:
-* **English:** `app.ts` configures middleware and routing without starting the server, allowing easy integration testing. `server.ts` imports `app.ts` and boots up the HTTP listener.
-* **বাংলা:** `app.ts` মিডলওয়্যার এবং রাউট কনফিগার করে (সার্ভার স্টার্ট না করে), যা ইন্টিগ্রেশন টেস্টের জন্য সুবিধাজনক। `server.ts` অ্যাপটি ইম্পোর্ট করে সার্ভার চালু বা লিসেন করে।
-
-
+| Folder / File | English | বাংলা |
+|---|---|---|
+| **`config/`** | Centralizes environment variables (`process.env`) into a typed config object. Prevents scattered `process.env` calls. | প্রজেক্টের সমস্ত এনভায়রনমেন্ট ভ্যারিয়েবল একটি নির্দিষ্ট টাইপ-সেফ অবজেক্টে একত্রিত করে। |
+| **`models/`** | Defines data structures (TypeScript interfaces) and handles database interactions or mock data stores. | ডেটার স্ট্রাকচার (ইন্টারফেস) এবং ডেটাবেজ বা ইন-মেমোরি স্টোর ডিফাইন করে। |
+| **`controllers/`** | Contains business logic for each route, extracting HTTP requests (`req`) and returning HTTP responses (`res`). | রাউটের মূল বিজনেস লজিক প্রসেস করে এবং রিকোয়েস্ট গ্রহণ করে রেসপন্স প্রদান করে। |
+| **`routes/`** | Maps specific URL paths to their respective controller functions. | নির্দিষ্ট URL এন্ডপয়েন্টের সাথে কন্ট্রোলার ফাংশনগুলোর ম্যাপিং সম্পন্ন করে। |
+| **`middlewares/`** | Intercepts incoming requests for authentication, logging, parsing, or error catching before reaching handlers. | রিকোয়েস্ট কন্ট্রোলারে পৌঁছানোর আগে বা এরর হ্যান্ডেল করার সময় মধ্যবর্তী ফিল্টার হিসেবে কাজ করে। |
+| **`app.ts` vs `server.ts`** | `app.ts` configures middleware and routing without starting the server, enabling easy integration testing. `server.ts` imports `app.ts` and boots up the HTTP listener. | `app.ts` মিডলওয়্যার ও রাউট কনফিগার করে (সার্ভার স্টার্ট না করে); `server.ts` অ্যাপটি ইম্পোর্ট করে সার্ভার চালু করে। |
 
 ---
 
 ## 📌 13.3 Code Implementation
 
-### Environment File (`.env`)
+### 🔧 Environment File (`.env`)
 
 ```env
 PORT=3000
-
 ```
 
-### 1. Configuration (`src/config/index.config.ts`)
+### 1️⃣ Configuration (`src/config/index.config.ts`)
 
 ```typescript
 import dotenv from "dotenv";
@@ -156,10 +170,9 @@ const config: Config = {
 };
 
 export default config;
-
 ```
 
-### 2. Models (`src/models/item.models.ts`)
+### 2️⃣ Models (`src/models/item.models.ts`)
 
 ```typescript
 export interface Item {
@@ -172,10 +185,9 @@ export interface Item {
 
 // In-memory data store for demonstration
 export let items: Item[] = [];
-
 ```
 
-### 3. Error Handling Middleware (`src/middlewares/errorHandler.ts`)
+### 3️⃣ Error Handling Middleware (`src/middlewares/errorHandler.ts`)
 
 ```typescript
 import type { NextFunction, Request, Response } from "express";
@@ -191,18 +203,17 @@ export const errorHandler = (
   _next: NextFunction
 ): void => {
   console.error("Error Intercepted:", err.message);
-  
+
   res.status(err.status || 500).json({
     success: false,
     message: err.message || "Internal Server Error",
   });
 };
-
 ```
 
-### 4. Controllers (`src/controllers/item.controller.ts`)
+> ⚠️ **Note on TypeScript & NodeNext:** When using `"moduleResolution": "NodeNext"`, relative imports must include the explicit file extension (e.g., `../models/item.models.js`).
 
-> **Note on TypeScript & NodeNext:** When using `"moduleResolution": "NodeNext"`, relative imports must include the explicit file extension (e.g., `../models/item.models.js`).
+### 4️⃣ Controllers (`src/controllers/item.controller.ts`)
 
 ```typescript
 import type { NextFunction, Request, Response } from "express";
@@ -359,7 +370,6 @@ export const deleteProduct = (req: Request, res: Response, next: NextFunction): 
     next(err);
   }
 };
-
 ```
 
 ### Root Controller (`src/controllers/projectStart.controller.ts`)
@@ -374,10 +384,9 @@ export const projectStart = (_req: Request, res: Response, next: NextFunction): 
     next(error);
   }
 };
-
 ```
 
-### 5. Routers
+### 5️⃣ Routers
 
 **`src/routes/projectStart.routes.ts`**
 
@@ -390,7 +399,6 @@ const router = Router();
 router.get("/", projectStart);
 
 export default router;
-
 ```
 
 **`src/routes/item.routes.ts`**
@@ -414,10 +422,9 @@ router.put("/items/:id", updateProduct);
 router.delete("/items/:id", deleteProduct);
 
 export default router;
-
 ```
 
-### 6. Express Application Setup (`src/app/app.ts`)
+### 6️⃣ Express Application Setup (`src/app/app.ts`)
 
 ```typescript
 import express, { type Application } from "express";
@@ -438,10 +445,9 @@ app.use("/api", itemRouter);
 app.use(errorHandler);
 
 export default app;
-
 ```
 
-### 7. Server Listener (`src/server.ts`)
+### 7️⃣ Server Listener (`src/server.ts`)
 
 ```typescript
 import app from "./app/app.js";
@@ -452,33 +458,36 @@ const PORT = config.port;
 app.listen(PORT, () => {
   console.log(`🚀 Server running in dev mode on http://localhost:${PORT}`);
 });
-
 ```
 
 ---
 
 ## 📌 13.4 Running and Testing the Application
 
-1. **Start Development Server (Hot Reloading)**:
-```bash
-npm run dev
-
-```
-
-
-2. **Build TypeScript to JavaScript**:
-```bash
-npm run build
-
-```
-
-
-3. **Run Compiled Production Build**:
-```bash
-npm start
-
-```
-
-
+| Step | Command | Purpose |
+|---|---|---|
+| 1 | `npm run dev` | Start development server with hot reloading (`tsx watch`) |
+| 2 | `npm run build` | Compile TypeScript source files → `./dist` |
+| 3 | `npm start` | Run the compiled production build |
 
 ---
+
+## 🛠️ API Endpoints Summary
+
+| Method | Endpoint | Action |
+|---|---|---|
+| `GET` | `/api/items` | Get all items |
+| `POST` | `/api/items/add` | Create a new item |
+| `GET` | `/api/items/:id` | Get a single item by ID |
+| `PUT` | `/api/items/:id` | Update an item by ID |
+| `DELETE` | `/api/items/:id` | Delete an item by ID |
+
+---
+
+## 📝 License
+
+This project is part of a personal learning journey — feel free to use it for educational purposes.
+
+---
+
+<p align="center">Made with 💻 & ☕ while learning Node.js, Express & TypeScript</p>

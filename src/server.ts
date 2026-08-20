@@ -5,5 +5,5 @@ const port = config.port;
 
 
 app.listen(port, () => {
-  console.log(`Hello World With TypeScript Done ${port}`);
+  console.log(`Basic Crud Opreation Using TypeScript ${port}`);
 });
